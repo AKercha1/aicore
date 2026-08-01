@@ -14,6 +14,78 @@ The AI Core is an open-source toolkit that streamlines the development, deployme
 -	Cost Control: Gain full visibility and control over AI-related costs by managing usage across users, models, and agents.
 -	AI Jobs Scheduler: Schedule and run background agents or workflows, automating repetitive tasks to improve efficiency.
 
+## Building and running locally
+
+### Prerequisites
+
+To build and run AI Core locally, you need:
+
+- **.NET 9.0 SDK** - Download from [dotnet.microsoft.com](https://dotnet.microsoft.com/download/dotnet/9.0)
+- **Docker** - Download from [Docker's official website](https://www.docker.com/)
+- **Docker Compose** - Included with Docker Desktop
+- **Python 3.11** - Required by the File Ingestion service (installed automatically when using Docker)
+
+### Building the solution
+
+Build the main AI Core API:
+
+```bash
+dotnet build AiCore.sln
+```
+
+Build the File Ingestion service:
+
+```bash
+dotnet build Ingestion/FileIngestion/FileIngestion.sln
+```
+
+### Testing
+
+This repository does not contain a test project. Tests are not available at this time.
+
+### Running with Docker Compose
+
+Start the entire stack (API, PostgreSQL, Redis, and Qdrant):
+
+```bash
+docker-compose up -d
+```
+
+Start the File Ingestion service with Qdrant:
+
+```bash
+cd Ingestion/FileIngestion
+docker-compose up -d
+cd ../..
+```
+
+### Accessing the API
+
+Once the services are running, the AI Core API is accessible at:
+
+- **API endpoint**: http://localhost:7878
+- **API base URL**: http://localhost:7878/api/v1
+
+The File Ingestion service is available at:
+
+- **Ingestion endpoint**: http://localhost:7880
+
+### Stopping the services
+
+Stop the main stack:
+
+```bash
+docker-compose down
+```
+
+Stop the File Ingestion service:
+
+```bash
+cd Ingestion/FileIngestion
+docker-compose down
+cd ../..
+```
+
 ## 🤖 Agents
 AI Core includes agents, modular components that enhance your AI workflows by automating specific tasks or integrating third-party services. Agents act as independent processes within the system, facilitating functions such as:
 
