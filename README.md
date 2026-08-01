@@ -23,7 +23,6 @@ To build and run AI Core locally, you need:
 - **.NET 9.0 SDK** - Download from [dotnet.microsoft.com](https://dotnet.microsoft.com/download/dotnet/9.0)
 - **Docker** - Download from [Docker's official website](https://www.docker.com/)
 - **Docker Compose** - Included with Docker Desktop
-- **Python 3.11** - Required by the File Ingestion service (if not using Docker)
 
 ### Building the solution
 
@@ -43,20 +42,30 @@ dotnet build Ingestion/FileIngestion/FileIngestion.sln
 
 This repository does not contain a test project. Tests are not available at this time.
 
+### Configuration
+
+The application requires configuration for database connection, authentication, and other settings. The `AiCoreApi/appsettings.json` file contains placeholder values that must be configured before running the application:
+
+- `DbName`, `DbUser`, `DbPassword` - PostgreSQL database credentials
+- `AuthSecurityKey`, `ClientId`, `ClientSecret` - Authentication configuration
+
+When using Docker Compose, these values are automatically provided via environment variables. For local development builds, you must either:
+
+1. Copy `appsettings.json` to `appsettings.Development.json` and replace the placeholder values with your local configuration, or
+2. Set the required environment variables before running the application.
+
 ### Running with Docker Compose
 
 Start the entire stack (API, PostgreSQL, and Redis):
 
 ```bash
-docker-compose up -d
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
 ```
 
 Start the File Ingestion service with Qdrant:
 
 ```bash
-cd Ingestion/FileIngestion
-docker-compose up -d
-cd ../..
+docker-compose -f Ingestion/FileIngestion/docker-compose.yml -f Ingestion/FileIngestion/docker-compose.override.yml up -d
 ```
 
 ### Accessing the API
@@ -65,25 +74,29 @@ Once the services are running, the AI Core API is accessible at:
 
 - **API endpoint**: http://localhost:7878
 - **API base URL**: http://localhost:7878/api/v1
+- **Swagger UI**: http://localhost:7878/swagger
 
 The File Ingestion service is available at:
 
 - **Ingestion endpoint**: http://localhost:7880
+
+Qdrant vector database (used by File Ingestion) is accessible at:
+
+- **Qdrant UI**: http://localhost:6339/dashboard
+- **Qdrant API**: http://localhost:6338 (mapped from container port 6333)
 
 ### Stopping the services
 
 Stop the main stack:
 
 ```bash
-docker-compose down
+docker-compose -f docker-compose.yml -f docker-compose.override.yml down
 ```
 
 Stop the File Ingestion service:
 
 ```bash
-cd Ingestion/FileIngestion
-docker-compose down
-cd ../..
+docker-compose -f Ingestion/FileIngestion/docker-compose.yml -f Ingestion/FileIngestion/docker-compose.override.yml down
 ```
 
 ## 🤖 Agents
