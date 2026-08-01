@@ -101,7 +101,6 @@ This will start:
 - AI Core API (port 7878)
 - PostgreSQL database (port 5439)
 - Redis cache (port 6379)
-- File Ingestion service (port 7880)
 
 View logs:
 
@@ -129,12 +128,12 @@ cd Ingestion/FileIngestion/Service
 dotnet run
 ```
 
-### Running File Ingestion Service
+### Running the File Ingestion Service
 
-The File Ingestion service can also be run independently:
+The File Ingestion service requires its own separate docker-compose.yml file:
 
 ```bash
-# Using Docker Compose (recommended for ingestion service)
+# Using Docker Compose (recommended)
 cd Ingestion/FileIngestion
 docker-compose up -d
 
@@ -143,7 +142,9 @@ cd Ingestion/FileIngestion/Service
 dotnet run
 ```
 
-The API will be available at `http://localhost:7878` (or as configured in your launch settings).
+The File Ingestion service will be available at port 7880.
+
+The API will be available at `http://localhost:7878` (or as configured in your launch settings). Note: Ports may be modified by docker-compose.override.yml files.
 
 ### Database Migrations
 
