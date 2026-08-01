@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # EditorConfig (the only reason to ignore - team policy)
-.editorconfig
+# .editorconfig
 
 qdrant_data/
 Ingestion/FileIngestion/Service/_files
