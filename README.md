@@ -23,7 +23,7 @@ To build and run AI Core locally, you need:
 - **.NET 9.0 SDK** - Download from [dotnet.microsoft.com](https://dotnet.microsoft.com/download/dotnet/9.0)
 - **Docker** - Download from [Docker's official website](https://www.docker.com/)
 - **Docker Compose** - Included with Docker Desktop
-- **Python 3.11** - Required by the File Ingestion service (installed automatically when using Docker)
+- **Python 3.11** - Required by the File Ingestion service (if not using Docker)
 
 ### Building the solution
 
@@ -45,7 +45,7 @@ This repository does not contain a test project. Tests are not available at this
 
 ### Running with Docker Compose
 
-Start the entire stack (API, PostgreSQL, Redis, and Qdrant):
+Start the entire stack (API, PostgreSQL, and Redis):
 
 ```bash
 docker-compose up -d
